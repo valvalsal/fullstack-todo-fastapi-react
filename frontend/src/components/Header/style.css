@@ -1,0 +1,21 @@
+nav {
+    display: flex;
+    gap:8px;
+    padding: 8px 4px;
+
+    &>a {
+        text-decoration: none;
+        background-color: cornflowerblue;
+        color: white;
+        padding: 8px;
+        border-radius: 20px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &.active {
+            font-weight: bold;
+        }
+    }
+}

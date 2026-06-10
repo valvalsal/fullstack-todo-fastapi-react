@@ -15,7 +15,7 @@ router = APIRouter(
 
 @router.get("/", response_model=list[TodoPublic])
 async def read_todos(session: SessionDep):
-    todos = session.exec(select(Todo)).all()
+    todos = session.exec(select(Todo).order_by(Todo.id)).all()
     return todos
 
 @router.post("/")

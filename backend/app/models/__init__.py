@@ -1,1 +1,1 @@
-from .todos import Todo
+from .todos import Todo as Todo

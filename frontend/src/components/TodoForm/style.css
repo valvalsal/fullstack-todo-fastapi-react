@@ -1,0 +1,25 @@
+.actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+
+    &>button {
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        &.cancel {
+            background-color: #ed7864;
+        }
+
+        &.submit {
+            background-color: #95ed64;
+        }
+    }
+}
