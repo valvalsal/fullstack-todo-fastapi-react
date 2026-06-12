@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import api from '../../api'
+/* import Loader from '../../components/Loader'
+import useAuth from '../../hooks/useAuth' */
+import { updateTodo, getTodos, deleteTodo } from '../../services/todoService'
 
 import './style.css'
 
@@ -14,32 +16,64 @@ function Home() {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        api.get('/todos/')
-            .then(response => setTodos(response.data))
-    }, [])
+    //const { isConnected, loading } = useAuth()
     
-    const handleDelete = (id) => {
-        api.delete(`/todos/${id}`)
-            .then(() => {
-                setDeletingId(id)
-
-                setTimeout(() => {
-                    setTodos(prevTodos => prevTodos.filter(t => t.id !== id))
-                    setDeletingId(null)
-                }, 500)
-            })
-    }
-
-    const handleDoneToggle = (todo) => {
-        const newStatus = !todo.is_done
+    useEffect(() => {
+        /* if (loading) return
         
-        api.put(`/todos/${todo.id}`, {
-            "is_done": newStatus
-        }).then(newTodo => {
-            setTodos(prevTodos => prevTodos.map(t => t.id === todo.id ? newTodo.data : t))
-        })
+        if (!isConnected) {
+            navigate('/login')
+            return
+        }       */  
+        
+        const fetchTodos = async () => {
+            try {
+                const data = await getTodos()
+                setTodos(data)
+            } catch (e) {
+                console.error("Error: ", e)
+            }
+        }
+        
+        fetchTodos()
+    }, [/*isConnected, loading, navigate*/])
+    
+    const handleDelete = async (id) => {
+        try {
+            await deleteTodo(id)
+                
+            setDeletingId(id)
+
+            setTimeout(() => {
+                setTodos(prevTodos => prevTodos.filter(t => t.id !== id))
+                setDeletingId(null)
+            }, 500)
+        } catch(e) {
+            console.error("Error: ", e)
+        }
     }
+
+    const handleDoneToggle = async (todo) => {
+        try {
+            const newStatus = !todo.is_done
+            
+            const newTodo = await updateTodo(todo.id, {
+                "is_done": newStatus
+            })
+            
+            setTodos(prevTodos => prevTodos.map(t => t.id === todo.id ? newTodo : t))
+        } catch(e) {
+            console.error("Error: ", e)
+        }
+    }
+
+   /*  if (loading) {
+        return <Loader />
+    }
+
+    if (!isConnected) {
+        return <></>
+    } */
 
     return (
         <div>

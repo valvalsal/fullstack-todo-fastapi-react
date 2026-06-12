@@ -1,21 +1,28 @@
-nav {
-    display: flex;
-    gap:8px;
-    padding: 8px 4px;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-    &>a {
-        text-decoration: none;
-        background-color: cornflowerblue;
-        color: white;
-        padding: 8px;
-        border-radius: 20px;
+  height: 64px;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ddd;
+}
 
-        &:hover {
-            text-decoration: underline;
-        }
+.menu,
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 
-        &.active {
-            font-weight: bold;
-        }
-    }
+.menu a,
+.user-actions a {
+  text-decoration: none;
+  color: #333;
+}
+
+.user-actions button {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
 }

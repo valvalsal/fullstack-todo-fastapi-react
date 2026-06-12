@@ -1,15 +1,18 @@
 import { useNavigate } from 'react-router'
 
 import ToDoForm from '../../components/TodoForm'
-import api from '../../api'
+import { createTodo } from '../../services/todoService'
 
 function CreateTodo() {
     const navigate = useNavigate()
 
-    const onSave = (data) => {
-        api.post('/todos/', data)
-            .then(() => navigate('/'))
-            .catch((e) => console.error(e))
+    const onSave = async (data) => {
+        try {
+            await createTodo(data)
+            navigate('/')
+        } catch(e) {
+            console.error("Error: ", e)
+        }
     }
     
     const onCancel = () => {

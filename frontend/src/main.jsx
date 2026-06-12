@@ -12,19 +12,30 @@ import './index.css'
 
 import Header from './components/Header'
 
+import { AuthProvider } from './contexts/AuthContext'
+
+import ProtectedRoute from './components/ProtectedRoute'
+
 import Home from './pages/Home'
+import Login from './pages/Login'
 import EditTodo from './pages/EditTodo'
 import CreateTodo from './pages/CreateTodo'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/create" element={<CreateTodo />} />
-        <Route path="/edit/:todoId" element={<EditTodo />} />
-      </Routes>
+      <AuthProvider>
+        <Header />
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          
+          <Route element={<ProtectedRoute />} >
+            <Route path="/" element={<Home />} />
+            <Route path="/create" element={<CreateTodo />} />
+            <Route path="/edit/:todoId" element={<EditTodo />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </Router>
   </StrictMode>,
 )

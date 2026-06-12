@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .core.config import settings
-from .routes import todos
+from .routes import todos, auth, users
 
 app = FastAPI()
 
@@ -16,6 +16,8 @@ if settings.all_cors_origins:
     )
 
 app.include_router(todos.router)
+app.include_router(auth.router)
+app.include_router(users.router)
 
 @app.get("/")
 def root():

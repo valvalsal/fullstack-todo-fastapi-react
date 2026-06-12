@@ -1,28 +1,43 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router'
 
-import api from '../../api'
+import { updateTodo, getTodo } from '../../services/todoService'
 
 import TodoForm from '../../components/TodoForm'
+import Loader from '../../components/Loader'
 
 function EditTodo() {
     const navigate = useNavigate()
     const { todoId } = useParams()
     const [todo, setTodo] = useState({})
     const [loading, setLoading] = useState(true)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
-        api.get(`/todos/${todoId}`)
-            .then(response => {
-                setTodo(response.data)
+        const fetchTodo = async () => {
+            try {
+                const data = await getTodo(todoId)
+                setTodo(data)
                 setLoading(false)
-            })
+            } catch(e) {
+                console.error("Error: ", e.response)
+                setLoading(false)
+                setErrorMessage(e.response.data.detail)
+            }
+        }
+        
+        fetchTodo()
     }, [todoId])
 
-    const onSave = (data) => {
-        api.put(`/todos/${todoId}`, {
-            "description": data.description
-        }).then(() => navigate('/'))
+    const onSave = async (data) => {
+        try {
+            await updateTodo(todoId, {
+                "description": data.description
+            })
+            navigate('/')
+        } catch(e) {
+            console.error("Error: ", e)
+        }
     }
 
     const onCancel = () => {
@@ -30,7 +45,16 @@ function EditTodo() {
     }
 
     if (loading) {
-        return <div>Loading&hellip;</div>
+        return <Loader />
+    }
+
+    if (errorMessage) {
+        return (
+        <div style={{paddingTop: '1rem'}}>
+            <p>{errorMessage}</p>
+            <p><a href="/">Go back</a></p>
+        </div>
+        )
     }
 
     return (

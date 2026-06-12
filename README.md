@@ -1,7 +1,5 @@
 # Full stack React/FastAPI basic todo app
 
-No user accounts yet.
-
 ## Requirements
 
 ### Front
@@ -41,6 +39,12 @@ From `./backend/`:
 
 ```console
 % uv run alembic upgrade head
+```
+
+- seed the database with default user 'johndoe', password: 'secret'
+
+```console
+% uv run python -m app.core.seed
 ```
 
 ## How to run
