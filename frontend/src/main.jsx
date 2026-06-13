@@ -21,7 +21,13 @@ import Login from './pages/Login'
 import EditTodo from './pages/EditTodo'
 import CreateTodo from './pages/CreateTodo'
 
-createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById('root')
+
+if (!rootElement) {
+  throw new Error("No #root element. App can't be loaded")
+}
+
+createRoot(rootElement).render(
   <StrictMode>
     <Router>
       <AuthProvider>
