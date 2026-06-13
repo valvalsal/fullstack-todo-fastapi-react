@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from sqlmodel import Field, text, DateTime
 
 def utc_now():
-    return datetime(timezone.utc)
+    return datetime.now(timezone.utc)
 
 PrimaryKeyUUID = Annotated[
     uuid.UUID,
