@@ -1,12 +1,8 @@
-from datetime import datetime, timezone
 import uuid
 
-from sqlmodel import SQLModel, Field, DateTime
+from sqlmodel import SQLModel, Field
 
-from .utils import PrimaryKeyUUID
-
-def utc_now():
-    return datetime.now(timezone.utc)
+from .utils import PrimaryKeyUUID, CreationDate
 
 class TodoBase(SQLModel):
     description: str = Field(index=True)
@@ -16,11 +12,7 @@ class Todo(TodoBase, table=True):
     id: PrimaryKeyUUID
 
     created_by_id: uuid.UUID = Field(foreign_key="user.id")
-    created_at: datetime = Field(
-        default_factory=utc_now,
-        sa_type=DateTime(timezone=True),
-        sa_column_kwargs={"server_default": "CURRENT_TIMESTAMP"}
-    )
+    created_at: CreationDate
 
 class TodoCreate(SQLModel):
     description: str
