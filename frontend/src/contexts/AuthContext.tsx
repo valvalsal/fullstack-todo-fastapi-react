@@ -1,17 +1,8 @@
-import {
-  createContext,
-  useState,
-  useEffect,
-  useCallback,
-  ReactNode,
-} from 'react';
+import { createContext, useState, useEffect, useCallback } from 'react';
+import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router';
-import {
-  loginUser,
-  fetchUserProfile,
-  TokenResponse,
-  UserProfile,
-} from '@/services/userService';
+import { loginUser, fetchUserProfile } from '@/services/userService';
+import type { TokenResponse, UserProfile } from '@/services/userService';
 
 interface AuthContextType {
   token: string | null;

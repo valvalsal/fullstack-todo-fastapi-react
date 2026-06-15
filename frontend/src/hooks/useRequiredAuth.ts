@@ -1,5 +1,5 @@
-import { AuthContextType } from '@/contexts/AuthContext';
-import { UserProfile } from '@/services/userService';
+import type { AuthContextType } from '@/contexts/AuthContext';
+import type { UserProfile } from '@/services/userService';
 import useAuth from './useAuth';
 
 interface AuthenticatedContextType extends AuthContextType {
