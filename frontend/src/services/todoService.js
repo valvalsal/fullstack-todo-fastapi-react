@@ -1,26 +1,38 @@
-import api from '../api'
+import api from '../api';
+
+/* interface TodoData {
+  description?: string;
+  is_done?: boolean;
+}
+
+interface Todo {
+  description: string;
+  is_done: boolean;
+  id: string;
+  created_by_id: string;
+} */
 
 const updateTodo = async (todoId, updateData) => {
-    const r = await api.put(`/todos/${todoId}`, updateData)
-    return r.data
-}
+  const r = await api.put(`/todos/${todoId}`, updateData);
+  return r.data;
+};
 
 const getTodos = async () => {
-    const r = await api.get('/todos/')
-    return r.data
-}
+  const r = await api.get('/todos/');
+  return r.data;
+};
 
 const getTodo = async (todoId) => {
-    const r = await api.get(`/todos/${todoId}`)
-    return r.data
-}
+  const r = await api.get(`/todos/${todoId}`);
+  return r.data;
+};
 
 const deleteTodo = async (todoId) => {
-    return await api.delete(`/todos/${todoId}`)
-}
+  return await api.delete(`/todos/${todoId}`);
+};
 
 const createTodo = async (todoData) => {
-    return await api.post('/todos/', todoData)
-}
+  return await api.post('/todos/', todoData);
+};
 
-export { updateTodo, getTodo, getTodos, deleteTodo, createTodo }
+export { updateTodo, getTodo, getTodos, deleteTodo, createTodo };

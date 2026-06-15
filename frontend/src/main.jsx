@@ -10,8 +10,6 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 
 import './index.css'
 
-import Header from './components/Header'
-
 import { AuthProvider } from './contexts/AuthContext'
 
 import ProtectedRoute from './components/ProtectedRoute'
@@ -31,7 +29,6 @@ createRoot(rootElement).render(
   <StrictMode>
     <Router>
       <AuthProvider>
-        <Header />
         <Routes>
           <Route path="/login" element={<Login />} />
           

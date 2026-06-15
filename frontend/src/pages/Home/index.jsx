@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-/* import Loader from '../../components/Loader'
-import useAuth from '../../hooks/useAuth' */
 import { updateTodo, getTodos, deleteTodo } from '../../services/todoService'
 
 import './style.css'
@@ -15,17 +13,8 @@ function Home() {
     const [deletingId, setDeletingId] = useState(null)
 
     const navigate = useNavigate();
-
-    //const { isConnected, loading } = useAuth()
     
     useEffect(() => {
-        /* if (loading) return
-        
-        if (!isConnected) {
-            navigate('/login')
-            return
-        }       */  
-        
         const fetchTodos = async () => {
             try {
                 const data = await getTodos()
@@ -36,7 +25,7 @@ function Home() {
         }
         
         fetchTodos()
-    }, [/*isConnected, loading, navigate*/])
+    }, [])
     
     const handleDelete = async (id) => {
         try {
@@ -67,15 +56,7 @@ function Home() {
         }
     }
 
-   /*  if (loading) {
-        return <Loader />
-    }
-
-    if (!isConnected) {
-        return <></>
-    } */
-
-    return (
+   return (
         <div>
             <h1><FontAwesomeIcon icon="fa-solid fa-list-check" /> My todos</h1>
             <div id="container">

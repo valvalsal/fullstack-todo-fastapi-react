@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 
-import ToDoForm from '../../components/TodoForm'
+import TodoForm from '../../components/TodoForm'
 import { createTodo } from '../../services/todoService'
 
 function CreateTodo() {
@@ -22,7 +22,7 @@ function CreateTodo() {
     return (
         <div>
             <h1>Create todo</h1>
-            <ToDoForm onSave={onSave} onCancel={onCancel}/>
+            <TodoForm onSave={onSave} onCancel={onCancel}/>
         </div>
     )
 }
