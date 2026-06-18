@@ -22,7 +22,8 @@ def init_db() -> None:
                 username="johndoe",
                 email="john.doe@anonymo.us",
                 full_name="John Doe",
-                password_hash=get_password_hash("secret")
+                password_hash=get_password_hash("secret"),
+                is_admin = True,
             )
             session.add(default_user)
             session.commit()

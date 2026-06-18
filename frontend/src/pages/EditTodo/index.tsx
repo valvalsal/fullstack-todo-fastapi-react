@@ -4,18 +4,28 @@ import axios from 'axios';
 
 import { updateTodo, getTodo } from '@/services/todoService';
 
-import TodoForm from '@/components/TodoForm';
+import Form from '@/components/Form';
+import type { FieldProps } from '@/components/Form';
+
 import Loader from '@/components/Loader';
 
 import type { Todo, UpdateTodoData } from '@/services/todoService';
 
-function EditTodo() {
+const EditTodo = () => {
   const navigate = useNavigate();
   const { todoId } = useParams<{ todoId: string }>();
 
   const [todo, setTodo] = useState<Todo | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  interface EditTodoForm {
+    description: string;
+  }
+
+  const fields: Array<FieldProps<EditTodoForm>> = [
+    { name: 'description', type: 'text', label: 'Description' },
+  ];
 
   useEffect(() => {
     const fetchTodo = async () => {
@@ -76,14 +86,14 @@ function EditTodo() {
   return (
     <div>
       <h1>Edit todo</h1>
-      <TodoForm
-        key={todo?.id}
-        itemToEdit={todo ?? undefined}
-        onSave={onSave}
+      <Form
+        fields={fields}
+        onSubmit={onSave}
         onCancel={onCancel}
+        initialData={(todo as EditTodoForm) ?? undefined}
       />
     </div>
   );
-}
+};
 
 export default EditTodo;

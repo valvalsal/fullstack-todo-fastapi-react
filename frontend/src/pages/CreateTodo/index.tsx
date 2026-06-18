@@ -1,12 +1,22 @@
 import { useNavigate } from 'react-router';
 
-import TodoForm from '@/components/TodoForm';
+import Form from '@/components/Form';
+
 import { createTodo } from '@/services/todoService';
 
 import type { CreateTodoData } from '@/services/todoService';
+import type { FieldProps } from '@/components/Form';
 
-function CreateTodo() {
+const CreateTodo = () => {
   const navigate = useNavigate();
+
+  interface CreateTodoForm {
+    description: string;
+  }
+
+  const fields: Array<FieldProps<CreateTodoForm>> = [
+    { name: 'description', type: 'text', label: 'Description' },
+  ];
 
   const onSave = async (data: CreateTodoData) => {
     try {
@@ -24,9 +34,9 @@ function CreateTodo() {
   return (
     <div>
       <h1>Create todo</h1>
-      <TodoForm onSave={onSave} onCancel={onCancel} />
+      <Form fields={fields} onSubmit={onSave} onCancel={onCancel} />
     </div>
   );
-}
+};
 
 export default CreateTodo;

@@ -8,6 +8,7 @@ class UserBase(SQLModel):
     username: str = Field(index=True, unique=True)
     email: str | None = Field(default=None)
     full_name: str | None = Field(default=None)
+    is_admin: bool | None = Field(default=False)
 
 class User(UserBase, table=True):
     id: PrimaryKeyUUID
