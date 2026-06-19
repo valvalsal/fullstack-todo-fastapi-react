@@ -26,3 +26,10 @@
     padding: 0.5rem 1rem;
     cursor: pointer;
 }
+
+.user-profile-pic {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}

@@ -20,6 +20,11 @@ const Header = () => {
         </NavLink>
       </nav>
       <div className="user-actions">
+        <img
+          className="user-profile-pic"
+          // src={`${import.meta.env.VITE_APP_STATIC_FILES_URL}/${user.profile_pic}`}
+          src="/blank-profile-picture.png"
+        />
         <div>Hello {user.username}</div>
         <button type="button" onClick={logout}>
           Logout

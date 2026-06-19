@@ -152,7 +152,6 @@ const Form = <T extends object>({
             <div key={field.name} className="textarea-field">
               <label>
                 <span className="field-label">{field.label}</span>
-                <br />
                 <textarea
                   name={field.name}
                   value={String(formData[field.name] ?? '')}
@@ -164,14 +163,16 @@ const Form = <T extends object>({
         }
 
         return (
-          <div key={field.name} className={`${field.type}-field`}>
-            <span className="field-label">{field.label}</span>
-            <input
-              type={field.type}
-              name={field.name}
-              value={String(formData[field.name] ?? '')}
-              onChange={handleChange}
-            />
+          <div key={field.name} className="generic-field">
+            <label>
+              <span className="field-label">{field.label}</span>
+              <input
+                type={field.type}
+                name={field.name}
+                value={String(formData[field.name] ?? '')}
+                onChange={handleChange}
+              />
+            </label>
           </div>
         );
       })}

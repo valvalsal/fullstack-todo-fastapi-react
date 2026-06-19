@@ -35,7 +35,7 @@ async def read_todo(
 ):
     return todo
     
-@router.put("/{todo_id}", response_model=TodoPublic)
+@router.patch("/{todo_id}", response_model=TodoPublic)
 async def update_todo(
     todo_id: Annotated[uuid.UUID, Path()],
     todo: TodoUpdate,

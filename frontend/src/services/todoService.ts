@@ -17,7 +17,7 @@ const updateTodo = async (
   todoId: string,
   updateData: UpdateTodoData,
 ): Promise<Todo> => {
-  const r = await api.put(`/todos/${todoId}`, updateData);
+  const r = await api.patch(`/todos/${todoId}`, updateData);
   return r.data;
 };
 

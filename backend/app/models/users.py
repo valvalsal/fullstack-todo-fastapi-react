@@ -9,6 +9,7 @@ class UserBase(SQLModel):
     email: str | None = Field(default=None)
     full_name: str | None = Field(default=None)
     is_admin: bool | None = Field(default=False)
+    profile_pic: str | None = Field(default=None)
 
 class User(UserBase, table=True):
     id: PrimaryKeyUUID
