@@ -22,10 +22,9 @@ app.include_router(todos.router)
 app.include_router(auth.router)
 app.include_router(users.router)
 
-UPLOAD_DIR = "uploads"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 
-app.mount("/static", StaticFiles(directory=UPLOAD_DIR), name="static")
+app.mount("/static", StaticFiles(directory=settings.UPLOAD_DIR), name="static")
 
 @app.get("/")
 def root():

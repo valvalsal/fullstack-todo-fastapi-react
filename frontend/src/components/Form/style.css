@@ -2,6 +2,48 @@
   margin-bottom: 1.5rem;
 }
 
+.select-field select, .generic-field input {
+    max-width: 400px;;
+}
+
+.select-field .field-label, .generic-field .field-label, .radio-field .field-label {
+    margin-left: auto;
+    margin-right: 1em;
+}
+
+.select-field label, .generic-field label, .radio-field {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.radio-field {
+    align-items: center;
+}
+
+.radio-fields {
+    display: flex;
+    flex-wrap: wrap;
+    
+    .radio-label {
+        margin-right: .25em;
+    }
+}
+
+.textarea-field label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    textarea {
+        width: 80%;
+        height: 20vh;
+    }
+}
+
+.checkbox-label {
+    margin-left: .25em;
+}
+
 .form-actions {
     margin-top: 16px;
     display: flex;

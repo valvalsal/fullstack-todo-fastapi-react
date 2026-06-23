@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import './style.css';
 
@@ -15,16 +15,33 @@ interface BaseFieldProps<T extends object> {
 interface StandardFieldProps<T extends object> extends BaseFieldProps<T> {
   type: 'text' | 'password' | 'checkbox' | 'textarea' | 'email' | 'number';
   options?: never;
+  render?: never;
 }
 
 interface SelectRadioFieldProps<T extends object> extends BaseFieldProps<T> {
   type: 'radio' | 'select';
   options: Array<InputOptions>;
+  render?: never;
 }
+
+interface CustomFieldProps<T extends object> extends BaseFieldProps<T> {
+  type: 'custom';
+  options?: never;
+  render: (props: {
+    value: FormData;
+    onChange: (value: FormData) => void;
+  }) => React.ReactNode;
+}
+
+export type FormData =
+  | string
+  | boolean
+  | Record<string, string | boolean | File>;
 
 type FieldProps<T extends object> =
   | StandardFieldProps<T>
-  | SelectRadioFieldProps<T>;
+  | SelectRadioFieldProps<T>
+  | CustomFieldProps<T>;
 
 type ChangingElements =
   | HTMLInputElement
@@ -55,12 +72,15 @@ const Form = <T extends object>({
   cancelButtonText = 'Cancel',
 }: FormProps<T>) => {
   const [formData, setFormData] = useState(() => {
-    const initialFormData: Record<string, string | boolean> = {};
+    const initialFormData: Record<string, FormData> = {};
     fields.forEach((field) => {
       if (field.type === 'checkbox') {
         initialFormData[field.name] = initialData?.[
           field.name as keyof T
         ] as boolean;
+      } else if (field.type === 'custom') {
+        initialFormData[field.name] =
+          initialData?.[field.name as keyof T] ?? {};
       } else {
         initialFormData[field.name] = String(
           initialData?.[field.name as keyof T] ?? '',
@@ -87,9 +107,25 @@ const Form = <T extends object>({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleCustomChange = (field: keyof T, value: FormData) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
   return (
     <form onSubmit={handleSubmit} className="form">
       {fields.map((field) => {
+        if (field.type === 'custom') {
+          return (
+            <div key={field.name} className="custom-field">
+              <span className="field-label">{field.label}</span>
+              {field.render({
+                value: formData[field.name],
+                onChange: (newValue) =>
+                  handleCustomChange(field.name, newValue),
+              })}
+            </div>
+          );
+        }
         if (field.type === 'select' && hasOptions(field)) {
           return (
             <div key={field.name} className="select-field">
@@ -115,18 +151,20 @@ const Form = <T extends object>({
           return (
             <div key={field.name} className="radio-field">
               <span className="field-label">{field.label}</span>
-              {field.options.map((option) => (
-                <label key={option.value}>
-                  <input
-                    name={field.name}
-                    type="radio"
-                    value={option.value}
-                    checked={formData[field.name] === option.value}
-                    onChange={handleChange}
-                  />
-                  <span className="radio-label">{option.label}</span>
-                </label>
-              ))}
+              <span className="radio-fields">
+                {field.options.map((option) => (
+                  <label key={option.value}>
+                    <input
+                      name={field.name}
+                      type="radio"
+                      value={option.value}
+                      checked={formData[field.name] === option.value}
+                      onChange={handleChange}
+                    />
+                    <span className="radio-label">{option.label}</span>
+                  </label>
+                ))}
+              </span>
             </div>
           );
         }

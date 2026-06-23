@@ -27,6 +27,8 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
+    UPLOAD_DIR: str = 'uploads'
+
     @computed_field
     @property
     def all_cors_origins(self) -> list[str]:

@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+import './style.css';
+
 export type AvatarMode = 'current' | 'delete' | 'new';
 
 export interface AvatarState {
@@ -55,60 +57,44 @@ const AvatarChooser = ({
     });
   };
 
-  const currentAvatarUrl = value.currentUrl ?? defaultAvatar;
+  const currentAvatarUrl = value.currentUrl
+    ? `${import.meta.env.VITE_APP_STATIC_FILES_URL}/${value.currentUrl}`
+    : defaultAvatar;
 
   const showNew = value.mode === 'new' && previewUrl && isNewImageLoaded;
   const showCurrent = value.mode === 'current' && !showNew;
   const showDefault =
     value.mode === 'delete' || (value.mode === 'new' && !showNew);
 
-  const previewImagesStyle: React.CSSProperties = {
-    width: 150,
-    height: 150,
-    objectFit: 'cover',
-    borderRadius: '50%',
-  };
-
   return (
-    <div>
-      <div>
+    <div className="avatar-chooser">
+      <div className="avatar-preview">
         <img
           src={currentAvatarUrl}
+          className="preview-image"
           style={{
-            ...previewImagesStyle,
             display: showCurrent ? 'block' : 'none',
           }}
         />
         <img
           src={defaultAvatar}
+          className="preview-image"
           style={{
-            ...previewImagesStyle,
             display: showDefault ? 'block' : 'none',
           }}
         />
         {previewUrl && (
           <img
             src={previewUrl}
+            className="preview-image"
             onLoad={() => setIsNewImageLoaded(true)}
             style={{
-              ...previewImagesStyle,
               display: showNew ? 'block' : 'none',
             }}
           />
         )}
-        {/* <img
-          ref={imgPreviewRef}
-          src={displayedAvatar}
-          alt="Avatar preview"
-          width={150}
-          height={150}
-          style={{
-            objectFit: 'cover',
-            borderRadius: '50%',
-          }}
-        /> */}
       </div>
-      <div>
+      <div className="avatar-mode">
         <label>
           <input
             type="radio"
@@ -129,32 +115,36 @@ const AvatarChooser = ({
           />{' '}
           Delete
         </label>
-        <label>
-          <input
-            type="radio"
-            name="mode"
-            value="new"
-            checked={value.mode === 'new'}
-            onChange={radioHandler}
-          />{' '}
-          New
-        </label>
-      </div>
-
-      {value.mode === 'new' && (
         <div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={fileHandler}
-            style={{ display: 'none' }}
-          />
-          <button type="button" onClick={() => fileInputRef.current?.click()}>
-            Choose a file
-          </button>
+          <label>
+            <input
+              type="radio"
+              name="mode"
+              value="new"
+              checked={value.mode === 'new'}
+              onChange={radioHandler}
+            />{' '}
+            New
+          </label>
+          {value.mode === 'new' && (
+            <span className="avatar-file-input">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={fileHandler}
+                style={{ display: 'none' }}
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                Choose a file
+              </button>
+            </span>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

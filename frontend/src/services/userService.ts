@@ -1,4 +1,5 @@
 import api from '@/api';
+import type { Profile } from '@/pages/EditProfile';
 
 export interface UserCredentials {
   [key: string]: string;
@@ -49,4 +50,25 @@ const fetchUserProfile = async (): Promise<UserProfile | undefined> => {
   }
 };
 
-export { loginUser, fetchUserProfile };
+const updateUserProfile = async (
+  data: Profile,
+): Promise<UserProfile | undefined> => {
+  const formData = new FormData();
+
+  formData.set('email', data.email);
+  formData.set('full_name', data.full_name);
+  formData.set('avatar_mode', data.profile_pic.mode);
+  if (data.profile_pic.file) {
+    formData.set('avatar_file', data.profile_pic.file);
+  }
+
+  const response = await api.put('/users/me', formData, {
+    headers: {
+      'Content-Type': undefined,
+    },
+  });
+
+  return response.data;
+};
+
+export { loginUser, fetchUserProfile, updateUserProfile };

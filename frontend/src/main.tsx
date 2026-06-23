@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import EditTodo from './pages/EditTodo';
 import CreateTodo from './pages/CreateTodo';
+import EditProfile from './pages/EditProfile';
 
 const rootElement = document.getElementById('root');
 
@@ -30,6 +31,7 @@ createRoot(rootElement).render(
             <Route path="/" element={<Home />} />
             <Route path="/create" element={<CreateTodo />} />
             <Route path="/edit/:todoId" element={<EditTodo />} />
+            <Route path="/me" element={<EditProfile />} />
           </Route>
         </Routes>
       </AuthProvider>

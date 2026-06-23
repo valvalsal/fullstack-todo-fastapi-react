@@ -1,4 +1,5 @@
 import uuid
+from enum import Enum
 
 from sqlmodel import SQLModel, Field
 
@@ -20,6 +21,11 @@ class UserPublic(UserBase):
 
 class UserCreate(UserBase):
     password: str
+
+class AvatarMode(Enum):
+    CURRENT = "current"
+    DELETE = "delete"
+    NEW = "new"
 
 class UserUpdate(SQLModel):
     username: str | None = None

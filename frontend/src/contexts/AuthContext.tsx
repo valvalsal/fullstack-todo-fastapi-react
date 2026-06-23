@@ -7,6 +7,7 @@ import type { TokenResponse, UserProfile } from '@/services/userService';
 interface AuthContextType {
   token: string | null;
   user: UserProfile | null;
+  setUser: React.Dispatch<React.SetStateAction<UserProfile | null>>;
   login: (username: string, password: string) => Promise<TokenResponse>;
   logout: () => void;
   loading: boolean;
@@ -76,7 +77,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   }, [token, logout, user]);
 
   return (
-    <AuthContext.Provider value={{ token, user, login, logout, loading }}>
+    <AuthContext.Provider
+      value={{ token, user, setUser, login, logout, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );
